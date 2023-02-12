@@ -1,0 +1,35 @@
+.pole {
+    padding: 20px;
+    
+}
+
+.cardsBot {
+    display: flex;
+    justify-content: center;    
+}
+
+.myCards {
+    margin-top: 20%;
+    display: flex;
+    justify-content: center  
+}
+
+.card {
+    height: 250px;
+    width: 150px;
+    background-color: #3d3d3d;
+    margin-left: 20px;
+}
+
+.suit {
+    color: white;
+}
+
+.card__info {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+

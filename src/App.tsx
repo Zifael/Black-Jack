@@ -2,16 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { creatingDeck } from './helpers/creatingDeck'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCards, getCardsBot, getCardsUser } from './utils/selectors/selectors'
+import { getCards, getCardsBot, getCardsUser, getSumBot } from './utils/selectors/selectors'
 import { AppDispatch } from './redux/store'
-import { setCards, setCardsBot, setCardsMy } from './redux/Cards/cardsSlice'
+import { setCards, setCardsBot, setCardsMy, setSumBot } from './redux/Cards/cardsSlice'
 import { setSum } from './helpers/setSum'
 
 
 
 
-function App() { 
-  const [sumCardsBot, setSumCardsBot] = useState<number>(0)
+function App() {   
   const [sumCardsUser, setSumCardsUser] = useState<number>(0)
   const cards = useSelector(getCards)
 
@@ -30,10 +29,10 @@ function App() {
   const cardsUser = useSelector(getCardsUser)
   
   useEffect(() => {
-    const sumCardsBot = setSum(cardsBot)
-    setSumCardsBot(sumCardsBot)     
+    dispatch(setSumBot())     
   }, [cardsBot])
   
+  const sumCardsBot =  useSelector(getSumBot)
   
   useEffect(() => {    
     const sumCardsUser =  setSum(cardsUser)   

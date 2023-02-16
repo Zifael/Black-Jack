@@ -17,7 +17,7 @@ export const creatingDeck = () => {
     // Adding cards jack, queen, king, ace
     mainCards.forEach((name, i) => {
       cardSuit.forEach(suit => {
-        if (i === 3) {
+        if (name === 'Туз') {
           cardsStart.push({id: uuid(), name, suit, count: 11, isAse: true})
         } else {
           cardsStart.push({id: uuid(), name, suit, count: 10})

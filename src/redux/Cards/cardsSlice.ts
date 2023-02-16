@@ -44,6 +44,9 @@ const cardsSlice = createSlice({
         setCards (state, action: PayloadAction<Icards[]>)  { 
             state.cards = [...state.cards, ...action.payload]                  
         },
+        setCardsPlayers (state) {
+            
+        },
         setCardsBot (state) {
             setCardPlayers(state, 'cardsBot')            
         },
@@ -69,7 +72,7 @@ const cardsSlice = createSlice({
     }
 })
 
-export const {setCards, setCardsBot, setCardsMy, setSumBot} = cardsSlice.actions 
+export const {setCards, setCardsBot, setCardsMy, setSumBot, setCardsPlayers} = cardsSlice.actions 
 export default cardsSlice.reducer
 
 

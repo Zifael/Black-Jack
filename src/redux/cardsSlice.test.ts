@@ -2,7 +2,7 @@ import {beforeEach, describe, expect, test} from "@jest/globals";
 import { createRandomCards } from "../helpers/createRandomCards";
 import { creatingDeck } from '../helpers/creatingDeck';
 import { Icards } from '../types/Icards';
-import cardRedcuer, {cardsSliceState, initialState, setCardsBot, setCards, setSumBot} from './Cards/cardsSlice'
+import cardRedcuer, {cardsSliceState, initialState, setCardsBot, setCards, setSumBot, setCardsPlayers} from './Cards/cardsSlice'
 
 const state: cardsSliceState = {
     cards: [],
@@ -29,12 +29,20 @@ describe('Card reducer', () => {
 
     test('Set cards for the bot not null or array of undefined', () => {        
                     
-        const initialState :cardsSliceState = {...state, cardsBot: [], cards: deck}
+        const initialState: cardsSliceState = {...state, cardsBot: [], cards: deck}
         const action = setCardsBot()       
         const expectState = {...state, cardsBot: [undefined, undefined]}
         expect(cardRedcuer(initialState, action)).not.toEqual(expectState)
         expect(cardRedcuer(initialState, action)).not.toEqual([])
     })   
+
+
+    test('push cards players', () => {
+        const initialState: cardsSliceState = {...state, players: []}
+        const action = setCardsPlayers()
+        const newState = cardRedcuer(initialState, action)
+        expect(newState.players.length).toBe(1)
+    })
 })
 
 

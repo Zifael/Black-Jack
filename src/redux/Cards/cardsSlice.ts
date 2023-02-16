@@ -3,18 +3,13 @@ import { Dispatch } from "react";
 import { Icards } from "../../types/Icards";
 import { AppDispatch } from "../store";
 
-interface IPlayers {
-    myCards: Array<Icards>,
-    myCardsSum: number
-}
 
 export interface cardsSliceState{    
     cards: Array<Icards>
     cardsBot: Array<Icards>
     myCards: Array<Icards>
     sumCardsBot: number
-    sumCardsUser: number,
-    players: Array<IPlayers> | []
+    sumCardsUser: number,   
 }
 
 export const initialState: cardsSliceState = {
@@ -25,8 +20,7 @@ export const initialState: cardsSliceState = {
 ],
     myCards: [],
     sumCardsBot: 0,
-    sumCardsUser: 0,
-    players: []
+    sumCardsUser: 0,    
 }
 
 const setCardPlayers = (state: typeof initialState, where: 'cardsBot' | 'myCards') => {
@@ -43,9 +37,6 @@ const cardsSlice = createSlice({
     reducers: {
         setCards (state, action: PayloadAction<Icards[]>)  { 
             state.cards = [...state.cards, ...action.payload]                  
-        },
-        setCardsPlayers (state) {
-            
         },
         setCardsBot (state) {
             setCardPlayers(state, 'cardsBot')            
@@ -72,7 +63,7 @@ const cardsSlice = createSlice({
     }
 })
 
-export const {setCards, setCardsBot, setCardsMy, setSumBot, setCardsPlayers} = cardsSlice.actions 
+export const {setCards, setCardsBot, setCardsMy, setSumBot} = cardsSlice.actions 
 export default cardsSlice.reducer
 
 

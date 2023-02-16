@@ -2,15 +2,14 @@ import {beforeEach, describe, expect, test} from "@jest/globals";
 import { createRandomCards } from "../helpers/createRandomCards";
 import { creatingDeck } from '../helpers/creatingDeck';
 import { Icards } from '../types/Icards';
-import cardRedcuer, {cardsSliceState, initialState, setCardsBot, setCards, setSumBot, setCardsPlayers} from './Cards/cardsSlice'
+import cardRedcuer, {cardsSliceState, initialState, setCardsBot, setCards, setSumBot} from './Cards/cardsSlice'
 
 const state: cardsSliceState = {
     cards: [],
     cardsBot: [],
     myCards: [],
     sumCardsBot: 0,
-    sumCardsUser: 0,
-    players: []
+    sumCardsUser: 0,    
 }
 
 describe('Card reducer', () => {
@@ -37,12 +36,6 @@ describe('Card reducer', () => {
     })   
 
 
-    test('push cards players', () => {
-        const initialState: cardsSliceState = {...state, players: []}
-        const action = setCardsPlayers()
-        const newState = cardRedcuer(initialState, action)
-        expect(newState.players.length).toBe(1)
-    })
 })
 
 

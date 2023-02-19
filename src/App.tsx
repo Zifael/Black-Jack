@@ -2,73 +2,44 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { creatingDeck } from './helpers/creatingDeck'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCards, getCardsBot, getCardsUser, getSumBot } from './utils/selectors/selectors'
+import { getCards } from './utils/selectors/selectors'
 import { AppDispatch } from './redux/store'
-import { setCards, setCardsBot, setCardsMy, setSumBot } from './redux/Cards/cardsSlice'
-import { setSum } from './helpers/setSum'
+import { setCards } from './redux/Cards/cardsSlice'
+import { BotPlayer } from './PlayersInBJ/BotPlayer'
+import LivePlayer from './PlayersInBJ/FirstPlayer'
 
 
 
 
 function App() {   
-  const [sumCardsUser, setSumCardsUser] = useState<number>(0)
+
+  const [gameStart, setGameStart] = useState<boolean>(false)
+  const [playerFinishidTurn, setPlayerFinishidTurn] = useState<boolean>(false)
+
   const cards = useSelector(getCards)
 
-  const deck = useMemo(() => creatingDeck(), [])
-  
+  const deck = useMemo(() => creatingDeck(), []) 
   
   const dispatch = useDispatch<AppDispatch>()  
 
   useEffect(() => {        
-    dispatch(setCards(deck))
-    dispatch(setCardsBot())       
-    dispatch(setCardsMy())         
+    dispatch(setCards(deck))             
   }, [])
 
-  const cardsBot = useSelector(getCardsBot)
-  const cardsUser = useSelector(getCardsUser)
-  
-  useEffect(() => {
-    dispatch(setSumBot())     
-  }, [cardsBot])
-  
-  const sumCardsBot =  useSelector(getSumBot)
-  
-  useEffect(() => {    
-    const sumCardsUser =  setSum(cardsUser)   
-    setSumCardsUser(sumCardsUser)
-  }, [cardsUser])
+
+ 
  
   return (
-    <div className="App">      
-      <section className='pole'>
-          <span className='cardsBot'>
-              {
-                cardsBot.map( e => 
-                    <div key={e.id} className='card'>
-                      <span className='card__info'>
-                        <span className='suit'>{e.suit}</span>
-                        <span className='suit'>{e.name}</span>
-                      </span>
-                    </div>
-                )
-              }  
-              <div>Счет: {sumCardsBot}</div>            
-          </span>          
-          <div className='myCards'>
-            { 
-              cardsUser.map(e => 
-                <div key={e.id} className='card'>
-                  <span className='card__info'>
-                    <span className='suit'>{e.suit}</span>
-                    <span className='suit'>{e.name}</span>
-                  </span>
-                </div>
-              )
-            }
-            <div>Счет: {sumCardsUser}</div>
-          </div>
+    <div className="App">
+      <section className='startGame'>
+        <h1>Black Jack</h1>
+        <button>Начать</button>
       </section>      
+      <section className='pole'>
+          {cards.length !==0 ? <BotPlayer playerFinishidTurn={playerFinishidTurn} /> : null}         
+          {cards.length !==0 ? <LivePlayer /> : null}            
+      </section>   
+      <button onClick={() => setPlayerFinishidTurn(true)}>закончить ход</button>   
     </div>
   )
 }

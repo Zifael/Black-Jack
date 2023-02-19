@@ -1,34 +1,31 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { Dispatch } from "react";
 import { Icards } from "../../types/Icards";
+import { setSumCards } from "../../utils/cardsRducer/setCardsPlayers";
 import { AppDispatch } from "../store";
 
 
 export interface cardsSliceState{    
     cards: Array<Icards>
     cardsBot: Array<Icards>
-    myCards: Array<Icards>
+    cardsPlayer: Array<Icards>
     sumCardsBot: number
-    sumCardsUser: number,   
+    sumCardsPlayer: number,   
 }
 
 export const initialState: cardsSliceState = {
     cards: [],
-    cardsBot: [
-        {id: '1', count: 11, name: 'picke', suit: 'tuse', isAse: true},
-        {id: '2', count: 11, name: 'bube', suit: 'tuse', isAse: true}
-],
-    myCards: [],
+    cardsBot: [],
+    cardsPlayer: [],
     sumCardsBot: 0,
-    sumCardsUser: 0,    
+    sumCardsPlayer: 0,    
 }
 
-const setCardPlayers = (state: typeof initialState, where: 'cardsBot' | 'myCards') => {
-    for (let i = 0; i < 2; i++) {
-        const randomCard = state.cards[Math.floor(Math.random() * state.cards.length)]        
-        state[where] = [...state[where], randomCard]
-        state.cards = state.cards.filter(e => e.id !== randomCard.id)
-    }      
+const setCardPlayers = (state: typeof initialState, whoseCards: 'cardsBot' | 'cardsPlayer') => { 
+    const randomIndex = Math.floor(Math.random() * state.cards.length) 
+    const randomCard = state.cards[randomIndex]        
+    state[whoseCards] = [...state[whoseCards], randomCard]
+    state.cards = state.cards.filter(e => e.id !== randomCard.id)    
 }
 
 const cardsSlice = createSlice({
@@ -38,32 +35,22 @@ const cardsSlice = createSlice({
         setCards (state, action: PayloadAction<Icards[]>)  { 
             state.cards = [...state.cards, ...action.payload]                  
         },
-        setCardsBot (state) {
-            setCardPlayers(state, 'cardsBot')            
+        setCardsBot (state,) {
+            setCardPlayers(state, 'cardsBot')             
         },
-        setCardsMy (state) {
-            setCardPlayers(state, 'myCards')            
+        setCardsMy (state) {                
+            setCardPlayers(state, 'cardsPlayer')               
         },
         setSumBot (state) {
-            let cardNumbers: Array<number> = []     
-
-            state.cardsBot.forEach(card => { 
-                cardNumbers.push(card.count)                      
-                let cuurrentAmmount = cardNumbers.reduce((prev, current) => prev + current, 0)                        
-                // if the amount is greater than 21 and there is an ace, then we change the ace amount by 1    
-                if ( cuurrentAmmount > 21 && card.isAse === true) {
-                    // We find ace by index
-                    const indexAse = cardNumbers.indexOf(11)     
-                    // Change the ace amount to 1          
-                    cardNumbers.splice(indexAse, 1, 1)               
-                }                  
-            })            
-            state.sumCardsBot = cardNumbers.reduce((prev, current) => prev + current, 0)            
+            state.sumCardsBot = setSumCards(state, "cardsBot",)           
+        },
+        setSumPlayers (state) {
+            state.sumCardsPlayer = setSumCards(state, 'cardsPlayer',)
         }
     }
 })
 
-export const {setCards, setCardsBot, setCardsMy, setSumBot} = cardsSlice.actions 
+export const {setCards, setCardsBot, setCardsMy, setSumBot, setSumPlayers} = cardsSlice.actions 
 export default cardsSlice.reducer
 
 

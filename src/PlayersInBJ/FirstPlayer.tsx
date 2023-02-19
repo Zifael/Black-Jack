@@ -30,25 +30,24 @@ function LivePlayer() {
   }, [cardsUser])
 
 
-  const getMoreCards = () => {
-    dispatch(setCardsMy())
-  }
+
 
   return (        
-        <div className='myCards'>
+    <div>
+       <div className='myCards'>
         { 
             cardsUser.map(e => 
             <div key={e.id} className='card'>
                 <span className='card__info'>
-                <span className='suit'>{e.suit}</span>
-                <span className='suit'>{e.name}</span>
+                  <span className='suit'>{e.suit}</span>
+                  <span className='suit'>{e.name}</span>
                 </span>
             </div>
             )
-        }
-        <div>Счет: {sumPlayer}</div>
-        <button onClick={getMoreCards}>еще</button>
-        </div>    
+        }        
+        </div>  
+        <div className='countCards'>Счет: {sumPlayer}</div>        
+    </div>  
   )
 }
 

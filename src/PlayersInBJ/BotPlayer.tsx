@@ -37,19 +37,19 @@ export function BotPlayer({playerFinishidTurn}: IProps) {
   }, [sumCardsBot, playerFinishidTurn])
 
   return (    
-    <span className='cardsBot'>
-        {
-        cardsBot.map( e => 
+    <div>
+      <div className='cardsBot'>
+        {cardsBot.map( e => 
             <div key={e.id} className='card'>
                 <span className='card__info'>
-                <span className='suit'>{e.suit}</span>
-                <span className='suit'>{e.name}</span>
+                  <span className='suit'>{e.suit}</span>
+                  <span className='suit'>{e.name}</span>
                 </span>
             </div>
-        )
-        }  
-        <div>Счет: {sumCardsBot}</div>            
-    </span>      
+        )}                 
+      </div> 
+      <div className='countCards'>Счет: {sumCardsBot}</div>     
+    </div>     
   )
 }
 

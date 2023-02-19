@@ -1,6 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2c3e50;
+}
+
+button {
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    align-items: center;    
+    background-color: transparent;
+    border: none;    
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
+
+button:hover {    
+    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+}
+
 .pole {
-    padding: 20px;
-    
+    padding: 20px;    
+}
+
+.startGame {
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+}
+
+.startGame__block {   
+    display: block;
+    border: 1px solid #7a757571;
+    border-radius: 5px;
+    padding: 40px 100px;
+    background-color: #2c3e50;
+    box-shadow: 0 0 10px 4px #3498db;
+}
+
+.startGame__title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    color: #f1c40f;
+}
+
+.startGame__button {    
+    padding: 10px 100px;    
+}
+
+
+/* cards */
+
+.pole {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pole__block {
+    display: block;
+    margin: 0 auto;
 }
 
 .cardsBot {
@@ -9,7 +78,7 @@
 }
 
 .myCards {
-    margin-top: 20%;
+    margin-top: 23em;
     display: flex;
     justify-content: center  
 }
@@ -19,6 +88,30 @@
     width: 150px;
     background-color: #3d3d3d;
     margin-left: 20px;
+}
+
+.countCards {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    color: #f1c40f;
+    font-weight: 600;
+}
+
+
+.finishMove {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    padding: 10px;
+    width: 10em;
+}
+
+.still {
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    width: 10em;
 }
 
 .suit {

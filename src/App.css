@@ -126,3 +126,43 @@ button:hover {
 }
 
 
+.winner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    visibility: hidden;
+}
+
+.winner.visibility {
+    visibility: visible;
+}
+
+.winner__block {
+    position: absolute;
+    top: 35%;
+    left: 37%;
+    width: 400px;
+    height: 120px;
+    max-height: 100%;
+    background-color: #f1c40f;
+    padding: 20px 0;
+    border-radius: 10px;    
+}
+
+.winner__title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.winner__button {
+    padding: 10px 20px;
+    background-color: #3498db;
+ 
+}
+

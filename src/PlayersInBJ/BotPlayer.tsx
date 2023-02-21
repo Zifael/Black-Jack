@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import '../App.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCardsBot, getSumBot } from '../utils/selectors/selectors'
+import { getCardsBot, getSumBot, getSumPlayer } from '../utils/selectors/selectors'
 import { AppDispatch } from '../redux/store'
-import { setCardsBot, setSumBot } from '../redux/Cards/cardsSlice'
+import { setCardsBot, setSumBot, setWinner } from '../redux/Cards/cardsSlice'
 
 
 
@@ -15,6 +15,8 @@ export function BotPlayer({playerFinishidTurn}: IProps) {
   
   const cardsBot = useSelector(getCardsBot)
   const sumCardsBot =  useSelector(getSumBot)
+  const sumCardsPlayer = useSelector(getSumPlayer)
+
   const dispatch = useDispatch<AppDispatch>()  
 
   
@@ -30,11 +32,16 @@ export function BotPlayer({playerFinishidTurn}: IProps) {
   }, [cardsBot])  
 
   useEffect(() => {
-    // When the player has completed the game, the bot gets the cards if necessary 
-    if (playerFinishidTurn && sumCardsBot < 18) {
+    // When the player completes the game and the amount is less than 18, 
+    // and the sum of the bot's cards is less or equal than the amount of the player's cards, 
+    // the bot will receive cards, if necessary
+    if ( playerFinishidTurn && sumCardsBot < 18 && sumCardsBot <= sumCardsPlayer ) {
       dispatch(setCardsBot())
+    } else if ( playerFinishidTurn ) {
+      // The bot does the last actions and we will find out who won
+      dispatch(setWinner())
     }
-  }, [sumCardsBot, playerFinishidTurn])
+  }, [sumCardsBot, playerFinishidTurn, sumCardsPlayer])
 
   return (    
     <div>

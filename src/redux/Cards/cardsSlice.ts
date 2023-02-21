@@ -1,8 +1,8 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch } from "react";
+import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { Icards } from "../../types/Icards";
 import { setSumCards } from "../../utils/cardsRducer/setCardsPlayers";
-import { AppDispatch } from "../store";
+import { setWin } from "../../utils/cardsRducer/setWin";
+import { creatingDeck } from "../../utils/creatingDeck";
 
 
 export interface cardsSliceState{    
@@ -11,6 +11,8 @@ export interface cardsSliceState{
     cardsPlayer: Array<Icards>
     sumCardsBot: number
     sumCardsPlayer: number,   
+    win: 'Bot' | 'Player' | 'Draw' | null,
+    isGameOn: boolean
 }
 
 export const initialState: cardsSliceState = {
@@ -18,7 +20,9 @@ export const initialState: cardsSliceState = {
     cardsBot: [],
     cardsPlayer: [],
     sumCardsBot: 0,
-    sumCardsPlayer: 0,    
+    sumCardsPlayer: 0, 
+    win: null,
+    isGameOn: false,   
 }
 
 const setCardPlayers = (state: typeof initialState, whoseCards: 'cardsBot' | 'cardsPlayer') => { 
@@ -32,8 +36,9 @@ const cardsSlice = createSlice({
     name: 'cardsSlice',
     initialState,
     reducers: {
-        setCards (state, action: PayloadAction<Icards[]>)  { 
-            state.cards = [...state.cards, ...action.payload]                  
+        setCards (state)  { 
+            const deck = creatingDeck()
+            state.cards = [...state.cards, ...deck]                  
         },
         setCardsBot (state,) {
             setCardPlayers(state, 'cardsBot')             
@@ -42,17 +47,29 @@ const cardsSlice = createSlice({
             setCardPlayers(state, 'cardsPlayer')               
         },
         setSumBot (state) {
-            state.sumCardsBot = setSumCards(state, "cardsBot",)           
+            state.sumCardsBot = setSumCards(state, "cardsBot")           
         },
         setSumPlayers (state) {
-            state.sumCardsPlayer = setSumCards(state, 'cardsPlayer',)
-        }
+            state.sumCardsPlayer = setSumCards(state, 'cardsPlayer')
+        },
+        setWinner (state) {
+            state.win = setWin(state)                                     
+        },
+        setIsGameOn(state) {
+            state.isGameOn = !state.isGameOn
+        },        
+        setRestartGame(state) {
+            Object.assign(state, initialState)            
+        },        
     }
 })
 
-export const {setCards, setCardsBot, setCardsMy, setSumBot, setSumPlayers} = cardsSlice.actions 
+
+
+export const { setCards, setCardsBot, setCardsMy, setSumBot, setSumPlayers, setWinner, setIsGameOn, setRestartGame } = cardsSlice.actions 
 export default cardsSlice.reducer
 
+  
 
 
 

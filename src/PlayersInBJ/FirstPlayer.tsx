@@ -3,7 +3,7 @@ import '../App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCardsUser, getSumPlayer } from '../utils/selectors/selectors'
 import { AppDispatch } from '../redux/store'
-import { setCardsMy, setSumPlayers } from '../redux/Cards/cardsSlice'
+import { setCardsMy, setSumPlayers, setWinner } from '../redux/Cards/cardsSlice'
 
 
 
@@ -12,12 +12,9 @@ import { setCardsMy, setSumPlayers } from '../redux/Cards/cardsSlice'
 
 function LivePlayer() { 
 
-
   const cardsUser = useSelector(getCardsUser)
   const sumPlayer = useSelector(getSumPlayer)
-  const dispatch = useDispatch<AppDispatch>()  
-
-  
+  const dispatch = useDispatch<AppDispatch>()   
 
   useEffect(() => {            
     for (let i = 0; i < 2; i++) {      
@@ -30,7 +27,11 @@ function LivePlayer() {
   }, [cardsUser])
 
 
-
+  useEffect(() => {
+    if (sumPlayer > 21) {
+      dispatch(setWinner())
+    }
+  }, [sumPlayer])
 
   return (        
     <div>

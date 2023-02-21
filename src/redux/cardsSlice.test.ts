@@ -1,53 +1,38 @@
-import {afterAll, afterEach, beforeEach, describe, expect, test} from "@jest/globals";
+import { beforeEach, describe, expect, test} from "@jest/globals";
 import { AnyAction } from "@reduxjs/toolkit";
-import { createRandomCards } from "../helpers/createRandomCards";
-import { creatingDeck } from '../helpers/creatingDeck';
+import { creatingDeck } from '../utils/creatingDeck';
 import { Icards } from '../types/Icards';
-import cardRedcuer, {cardsSliceState, initialState, setCardsBot, setCards, setSumBot, setSumPlayers, setCardsMy} from './Cards/cardsSlice'
+import cardRedcuer, {cardsSliceState, setCardsBot, setCards, setSumBot, setCardsMy, setWinner, setRestartGame} from './Cards/cardsSlice'
 
-
+const state: cardsSliceState = {
+    cards: [],
+    cardsBot: [],
+    cardsPlayer: [],
+    sumCardsBot: 0,
+    sumCardsPlayer: 0,
+    win: null,
+    isGameOn: false
+}
 
 describe('Set cards', () => {
-    const state: cardsSliceState = {
-        cards: [],
-        cardsBot: [],
-        cardsPlayer: [],
-        sumCardsBot: 0,
-        sumCardsPlayer: 0,    
-    }
-    const deck = creatingDeck()    
-
-    test('Creating deck', () => {
-        expect(deck.length).toBe(52)
-    })
-        
+         
     test('set cards in state', () => {
         const initialState: cardsSliceState = {...state, cards: []}
-        const action = setCards(deck)
-        const expectState: cardsSliceState = {...state, cards: deck}
-        expect(cardRedcuer(initialState, action)).toEqual(expectState)       
+        const action = setCards()
+        const newState = cardRedcuer(initialState, action)
+        expect(newState.cards.length).toBe(52)       
     }) 
 })
 
-describe('Set cards for players', () => {
-    let state: cardsSliceState
-    
-        const deck = creatingDeck()
-        state = {
-            cards: deck,
-            cardsBot: [],
-            cardsPlayer: [],
-            sumCardsBot: 0,
-            sumCardsPlayer: 0,    
-        }
-    
+describe('Set cards for players', () => {     
 
     const setCardsPlayers = (whose: 'cardsBot' | 'cardsPlayer', action: AnyAction) => {
         let initialState: cardsSliceState
+        const deck = creatingDeck()
         if ( whose === 'cardsBot' ) {
-            initialState = {...state, cardsBot: []} 
+            initialState = {...state, cards: deck, cardsBot: []} 
         } else {
-            initialState = {...state, cardsPlayer: []} 
+            initialState = {...state, cards: deck, cardsPlayer: []} 
         }                   
         const newSwate: cardsSliceState = cardRedcuer(initialState, action)       
         expect(newSwate[whose]).not.toEqual([undefined])      
@@ -67,16 +52,7 @@ describe('Set cards for players', () => {
 
 
 describe('Checking all the tests with an ace in hand', () => {
-    let state: cardsSliceState
-    beforeEach(() => {
-        state = {
-            cards: [],
-            cardsBot: [],
-            cardsPlayer: [],
-            sumCardsBot: 0,
-            sumCardsPlayer: 0,    
-        }
-    })
+    
 
     const testAce = (cards: Array<Icards>, exp: number) => {
         const initialState: cardsSliceState = {
@@ -126,6 +102,38 @@ describe('Checking all the tests with an ace in hand', () => {
             {id: '5', count: 4, name: 'bube', suit: 'tuse', isAse: false},            
         ]
         testAce(cards, 21)
+    })
+})
+
+
+describe('set winner', () => {    
+
+    const setWinnerTest = (sumCardsBot: number, sumCardsPlayer: number, whose: 'Bot' | 'Player' | 'Draw') => { 
+        const initialState = {...state, sumCardsBot, sumCardsPlayer}      
+        const action = setWinner() 
+        const newState = cardRedcuer(initialState, action)
+        expect(newState.win).toBe(whose)
+        
+    }
+
+    test ('win bot', () => {        
+        setWinnerTest(21, 14, 'Bot')
+    }) 
+
+    test ('win player', () => {        
+        setWinnerTest(18, 19, 'Player')
+    })
+
+    test('draw', () => {
+        setWinnerTest(21, 21, 'Draw')
+    })
+
+    test('too many - Bot', () => {
+        setWinnerTest(34, 15, 'Player')
+    })
+
+    test('too many - Player', () => {
+        setWinnerTest(21, 26, 'Bot')
     })
 })
 

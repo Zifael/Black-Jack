@@ -1,37 +1,43 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import { creatingDeck } from './helpers/creatingDeck'
+import { creatingDeck } from './utils/creatingDeck'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCards } from './utils/selectors/selectors'
+import { getCards, getWiner } from './utils/selectors/selectors'
 import { AppDispatch } from './redux/store'
 import { setCards, setCardsMy } from './redux/Cards/cardsSlice'
 import { BotPlayer } from './PlayersInBJ/BotPlayer'
 import LivePlayer from './PlayersInBJ/FirstPlayer'
+import WinnerWindow from './components/WinnerWindow'
 
 
 
 
 function App() {   
+  const dispatch = useDispatch<AppDispatch>()
 
-  const [gameStart, setGameStart] = useState<boolean>(true)
+  // It is necessary that the bot can receive cards after our turn, if it needs it
   const [playerFinishidTurn, setPlayerFinishidTurn] = useState<boolean>(false)
 
-  const cards = useSelector(getCards)
+  const [gameStart, setGameStart] = useState<boolean>(false)
 
-  const deck = useMemo(() => creatingDeck(), []) 
+  const cards = useSelector(getCards)
+    
+  const winner = useSelector(getWiner) 
   
-  const dispatch = useDispatch<AppDispatch>()  
 
   useEffect(() => {        
-    dispatch(setCards(deck))             
+    dispatch(setCards())             
   }, []) 
 
   const getMoreCards = () => {
     dispatch(setCardsMy())
-  }
- 
+  } 
+
+  
+
   return (
-    <div className="App">           
+    <div className="App">      
+      {winner && <WinnerWindow winner={winner} setPlayerFinishidTurn={setPlayerFinishidTurn}/>}           
       {!gameStart ?
         <section className='startGame'>
           <div className='startGame__block'>

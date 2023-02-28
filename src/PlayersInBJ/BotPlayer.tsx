@@ -49,8 +49,8 @@ export function BotPlayer({playerFinishidTurn}: IProps) {
         {cardsBot.map( e => 
             <div key={e.id} className='card'>
                 <span className='card__info'>
-                  <span className='suit'>{e.suit}</span>
-                  <span className='suit'>{e.name}</span>
+                  <img  className='suit' src={e.suit} />
+                  <span className='cards'>{e.name}</span>
                 </span>
             </div>
         )}                 

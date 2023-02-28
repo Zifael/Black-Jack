@@ -1,4 +1,4 @@
-import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { Icards } from "../../types/Icards";
 import { setSumCards } from "../../utils/cardsRducer/setCardsPlayers";
 import { setWin } from "../../utils/cardsRducer/setWin";

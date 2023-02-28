@@ -34,20 +34,21 @@ function LivePlayer() {
   }, [sumPlayer])
 
   return (        
-    <div>
+    <div className='cardsPlayer'>
+      <div className='countCards'>Счет: {sumPlayer}</div>
        <div className='myCards'>
         { 
             cardsUser.map(e => 
             <div key={e.id} className='card'>
                 <span className='card__info'>
-                  <span className='suit'>{e.suit}</span>
-                  <span className='suit'>{e.name}</span>
+                  <img  className='suit' src={e.suit} />                  
+                  <span className='cards'>{e.name}</span>
                 </span>
             </div>
             )
         }        
         </div>  
-        <div className='countCards'>Счет: {sumPlayer}</div>        
+                
     </div>  
   )
 }

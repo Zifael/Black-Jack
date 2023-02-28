@@ -77,8 +77,12 @@ button:hover {
     justify-content: center;    
 }
 
-.myCards {
-    margin-top: 23em;
+.cardsPlayer {
+    margin-top: 22em;
+}
+
+.myCards {   
+    margin-top: 10px; 
     display: flex;
     justify-content: center  
 }
@@ -86,8 +90,9 @@ button:hover {
 .card {
     height: 250px;
     width: 150px;
-    background-color: #3d3d3d;
+    background-color: #ffffff;
     margin-left: 20px;
+    border-radius: 20px;
 }
 
 .countCards {
@@ -96,6 +101,7 @@ button:hover {
     margin-top: 10px;
     color: #f1c40f;
     font-weight: 600;
+    font-size: 20px;
 }
 
 
@@ -115,11 +121,17 @@ button:hover {
 }
 
 .suit {
-    color: white;
+    width: 25px;
+    height: 25px;   
 }
 
-.card__info {
-    padding: 5px;
+.cards {
+    color: black;
+    font-size: 24px;
+}
+
+.card__info {    
+    padding: 7px;
     display: flex;
     align-items: center;
     justify-content: space-between;

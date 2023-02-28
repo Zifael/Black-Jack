@@ -1,11 +1,14 @@
 import { Icards } from "../types/Icards"
 import {v4 as uuid} from 'uuid'
-
+import diamonds from '../img/diamonds.png'
+import spades from '../img/spades.png'
+import heart from '../img/heart.png'
+import clubs from '../img/clubs.png'
 
 export const creatingDeck = () => {  
   const cardsStart: Array<Icards> = []
    
-    const cardSuit = ['Черви', 'Крести', 'Буби', 'Пики']
+    const cardSuit = [heart, clubs, diamonds, spades]
     const mainCards = ['Валет', 'Дама', 'Король', 'Туз']
 
     // Adding cards from 2 to 10
